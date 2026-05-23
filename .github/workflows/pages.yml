@@ -1,0 +1,53 @@
+# Deploy this static site to GitHub Pages on push to main.
+#
+# Replaces the legacy "Deploy from a branch" Pages auto-deploy which
+# was failing intermittently on its built-in actions/checkout step
+# (GitHub is phasing out the legacy path). This workflow does the same
+# thing — upload the repo as a static artifact, deploy to Pages — but
+# uses the modern GitHub Actions-based deploy that's the official
+# replacement.
+#
+# Repo Settings → Pages → Source must be set to "GitHub Actions" for
+# this workflow to actually publish. With the legacy "Deploy from a
+# branch" setting, this workflow's deploy step would fail.
+
+name: pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one Pages deploy at a time; cancel any in-progress run on new push.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        # Uploads the whole repo as the static site. Adjust `path:` if
+        # you ever want to deploy only a subdirectory (e.g. `./dist`).
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
