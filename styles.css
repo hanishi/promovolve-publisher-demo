@@ -1,0 +1,180 @@
+/* The Daily Chronicle — shared stylesheet (NYT-inspired).
+   Fictional demo publication for the PromoVolve ad platform.
+   Loaded from every page via <link rel="stylesheet" href="/styles.css">. */
+
+:root {
+  --ink:    #121212;
+  --paper:  #ffffff;
+  --muted:  #5a5a5a;
+  --faint:  #8a8a8a;
+  --rule:   #121212;
+  --hair:   #e2e2e2;
+  --link:   #326891;
+  --serif:  Georgia, 'Times New Roman', Times, serif;
+  --sans:   'Libre Franklin', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --black:  'UnifrakturCockney', 'Old English Text MT', Georgia, serif;
+  --wrap:   1100px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--serif);
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--ink); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.container { max-width: var(--wrap); margin: 0 auto; padding: 0 18px; }
+
+/* ---------- Masthead ---------- */
+.masthead { padding-top: 10px; }
+.masthead-top {
+  display: flex; align-items: center; justify-content: space-between;
+  font-family: var(--sans); font-size: 0.7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted);
+  border-bottom: 1px solid var(--hair); padding-bottom: 8px;
+}
+.masthead-top .edition-right { text-align: right; }
+.masthead-title {
+  font-family: var(--black); font-weight: 400;
+  font-size: clamp(2.6rem, 8vw, 4.6rem); line-height: 1;
+  text-align: center; padding: 14px 0 10px;
+}
+.masthead-title a { color: var(--ink); }
+.masthead-title a:hover { text-decoration: none; }
+
+/* Section navigation */
+.nav-sections { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.nav-sections ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; }
+.nav-sections a {
+  display: block; font-family: var(--sans); font-weight: 600; font-size: 0.78rem;
+  text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink);
+  padding: 9px 13px;
+}
+.nav-sections li + li a { border-left: 1px solid var(--hair); }
+.nav-sections a:hover { color: var(--link); text-decoration: none; }
+
+/* ---------- Layout ---------- */
+.page-body { display: flex; gap: 32px; padding: 26px 0; }
+.main-content { flex: 1; min-width: 0; }
+.sidebar { width: 300px; flex-shrink: 0; }
+
+@media (max-width: 768px) {
+  .page-body { flex-direction: column; }
+  .sidebar { width: 100%; }
+}
+
+/* ---------- Ad slots ---------- */
+.ad-label {
+  font-family: var(--sans); font-size: 0.62rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.14em; color: var(--faint);
+  text-align: center; padding-top: 14px;
+}
+.ad-slot {
+  background: #f6f6f4; border: 1px solid var(--hair);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--faint); font-family: var(--sans); font-size: 0.7rem;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  margin: 4px auto 8px; width: 100%;
+}
+.ad-slot[data-w="728"][data-h="90"]  { max-width: 728px; aspect-ratio: 728/90;  }
+.ad-slot[data-w="970"][data-h="90"]  { max-width: 970px; aspect-ratio: 970/90;  }
+.ad-slot[data-w="300"][data-h="250"] { max-width: 300px; aspect-ratio: 300/250; }
+.ad-slot[data-w="300"][data-h="600"] { max-width: 300px; aspect-ratio: 300/600; }
+.ad-slot[data-w="336"][data-h="280"] { max-width: 336px; aspect-ratio: 336/280; }
+.ad-slot[data-w="160"][data-h="600"] { max-width: 160px; aspect-ratio: 160/600; }
+.ad-slot[data-w="320"][data-h="50"]  { max-width: 320px; aspect-ratio: 320/50;  }
+
+/* ---------- Home front ---------- */
+.lead-story { border-bottom: 1px solid var(--ink); padding-bottom: 24px; margin-bottom: 24px; }
+.lead-story .kicker { margin-bottom: 8px; }
+.lead-story h2 {
+  font-family: var(--serif); font-weight: 700; font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.08; letter-spacing: -0.01em; margin-bottom: 12px;
+}
+.lead-story .summary { font-size: 1.15rem; color: #333; line-height: 1.55; max-width: 46rem; }
+.lead-story .byline { margin-top: 12px; }
+
+.front-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px 36px; }
+@media (max-width: 640px) { .front-grid { grid-template-columns: 1fr; } }
+
+.section-block { border-top: 1px solid var(--hair); padding-top: 14px; }
+.section-block > h3 {
+  font-family: var(--sans); font-size: 0.82rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px;
+}
+.section-block > h3 a { color: var(--ink); }
+.story-list { list-style: none; }
+.story-list li { padding: 10px 0; border-bottom: 1px solid var(--hair); }
+.story-list li:last-child { border-bottom: none; }
+.story-list .headline { font-family: var(--serif); font-weight: 700; font-size: 1.08rem; line-height: 1.25; }
+.story-list .summary { font-size: 0.92rem; color: var(--muted); margin-top: 4px; line-height: 1.45; }
+
+/* ---------- Section front ---------- */
+.section-title {
+  font-family: var(--serif); font-weight: 700; font-size: 2.1rem;
+  letter-spacing: -0.01em; border-bottom: 1px solid var(--ink);
+  padding-bottom: 10px; margin-bottom: 20px;
+}
+.story-card { border-bottom: 1px solid var(--hair); padding-bottom: 18px; margin-bottom: 18px; }
+.story-card:last-child { border-bottom: none; }
+.story-card .kicker { margin-bottom: 6px; }
+.story-card h3 { font-family: var(--serif); font-weight: 700; font-size: 1.5rem; line-height: 1.18; margin-bottom: 6px; }
+.story-card p { color: #333; font-size: 1rem; line-height: 1.5; }
+.story-card .byline { margin-top: 8px; }
+
+/* ---------- Article ---------- */
+.kicker {
+  font-family: var(--sans); font-size: 0.72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em; color: var(--link);
+}
+.breadcrumb {
+  font-family: var(--sans); font-size: 0.74rem; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 14px;
+}
+.article-header { margin-bottom: 22px; }
+.article-header h1 {
+  font-family: var(--serif); font-weight: 700; font-size: clamp(2rem, 5vw, 2.9rem);
+  line-height: 1.1; letter-spacing: -0.01em; margin: 8px 0 14px;
+}
+.article-header .summary { font-size: 1.2rem; color: #333; line-height: 1.5; max-width: 44rem; }
+.byline {
+  font-family: var(--sans); font-size: 0.8rem; color: var(--ink);
+  text-transform: uppercase; letter-spacing: 0.03em;
+}
+.byline .timestamp { color: var(--muted); font-weight: 400; text-transform: none; letter-spacing: 0; }
+.article-meta { border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); padding: 12px 0; margin-bottom: 24px; }
+
+.article-body p { font-size: 1.12rem; line-height: 1.72; margin-bottom: 20px; max-width: 44rem; }
+.article-body p:first-of-type::first-letter {
+  font-family: var(--serif); font-weight: 700; float: left;
+  font-size: 3.4rem; line-height: 0.78; padding: 4px 8px 0 0;
+}
+.article-body h2 { font-family: var(--serif); font-weight: 700; font-size: 1.4rem; margin: 8px 0 12px; }
+
+.related-articles { margin-top: 36px; padding-top: 16px; border-top: 2px solid var(--ink); }
+.related-articles h3 {
+  font-family: var(--sans); font-size: 0.82rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px;
+}
+.related-articles ul { list-style: none; }
+.related-articles li { padding: 8px 0; border-bottom: 1px solid var(--hair); font-family: var(--serif); font-weight: 700; }
+.related-articles li:last-child { border-bottom: none; }
+
+/* ---------- About ---------- */
+.about-content { max-width: 760px; padding: 8px 0 24px; }
+.about-content h1 { font-family: var(--serif); font-weight: 700; font-size: 2.4rem; margin-bottom: 16px; letter-spacing: -0.01em; }
+.about-content h2 { font-family: var(--serif); font-weight: 700; font-size: 1.35rem; margin-top: 26px; margin-bottom: 8px; }
+.about-content p { margin-bottom: 16px; font-size: 1.08rem; line-height: 1.6; }
+.about-content ul { margin: 0 0 16px 1.2em; }
+.about-content li { margin-bottom: 6px; }
+
+/* ---------- Footer ---------- */
+.site-footer { border-top: 1px solid var(--ink); margin-top: 40px; padding: 28px 0 40px; text-align: center; }
+.footer-logo { font-size: 2rem; padding: 0 0 10px; }
+.site-footer p { font-family: var(--sans); font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
